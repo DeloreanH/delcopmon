@@ -42,4 +42,22 @@ export interface ICustomer extends Document {
     city: string;
     state: string;
     referenceAddress: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IConfigurations extends Document {
+    name: string;
+    value: object;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IEquipment extends Document {
+    modell: string;
+    code: string;
+    name: string;
+    brand: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

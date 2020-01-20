@@ -11,26 +11,26 @@ import { deleteCustomerDTO } from 'src/common/dtos/deleteCustomer.dto';
 export class CustomersService {
     constructor(
         @InjectModel(modelName.CUSTOMER) private customerModel: Model<ICustomer>,
-    ){}
+    ) {}
 
     public async list(): Promise<ICustomer[]> {
         return await this.customerModel.find({});
     }
-    public async create(createCustomeDto: createCustomerDTO): Promise<ICustomer> {
-        const customer = new this.customerModel(createCustomeDto);
+    public async create(createCustomerDto: createCustomerDTO): Promise<ICustomer> {
+        const customer = new this.customerModel(createCustomerDto);
         return await customer.save();
     }
-    public async update(updateCustomeDto: updateCustomerDTO): Promise<ICustomer> {
-        const customer = await this.findById(updateCustomeDto.id);
+    public async update(updateCustomerDto: updateCustomerDTO): Promise<ICustomer> {
+        const customer = await this.findById(updateCustomerDto.id);
         if (!customer) {
             throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
         } else {
-            customer.customerName     = updateCustomeDto.customerName;
-            customer.rif              = updateCustomeDto.rif;
-            customer.city             = updateCustomeDto.city;
-            customer.state            = updateCustomeDto.state;
-            customer.referenceAddress = updateCustomeDto.referenceAddress;
-            customer.address          = updateCustomeDto.address;
+            customer.customerName     = updateCustomerDto.customerName;
+            customer.rif              = updateCustomerDto.rif;
+            customer.city             = updateCustomerDto.city;
+            customer.state            = updateCustomerDto.state;
+            customer.referenceAddress = updateCustomerDto.referenceAddress;
+            customer.address          = updateCustomerDto.address;
             return await customer.save();
         }
     }

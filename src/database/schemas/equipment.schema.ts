@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 export const EquipmentSchema = new Schema({
-    model: {
+    modell: {
         type: String,
         unique: true,
     },

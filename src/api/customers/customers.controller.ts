@@ -2,8 +2,8 @@ import { Controller, Body, Post, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CustomersService } from './customers.service';
 import { createCustomerDTO } from '../../common/dtos/createCustomer.dto';
-import { updateCustomerDTO } from 'src/common/dtos/updateCustomer.dto';
-import { deleteCustomerDTO } from 'src/common/dtos/deleteCustomer.dto';
+import { updateCustomerDTO } from '../../common/dtos/updateCustomer.dto';
+import { deleteCustomerDTO } from '../../common/dtos/deleteCustomer.dto';
 
 @Controller('customers')
 @UseGuards(AuthGuard('jwt'))
@@ -15,16 +15,16 @@ export class CustomersController {
         return this.customerService.list();
     }
     @Post('create')
-    async create(@Body() createCustomeDto: createCustomerDTO) {
-        return this.customerService.create(createCustomeDto);
+    async create(@Body() createCustomerDto: createCustomerDTO) {
+        return this.customerService.create(createCustomerDto);
     }
     @Post('update')
-    async update(@Body() updateCustomeDto: updateCustomerDTO) {
-        return this.customerService.update(updateCustomeDto);
+    async update(@Body() updateCustomerDto: updateCustomerDTO) {
+        return this.customerService.update(updateCustomerDto);
     }
     @Post('delete')
-    async delete(@Body() deleteCustomeDto: deleteCustomerDTO) {
-        return this.customerService.delete(deleteCustomeDto);
+    async delete(@Body() deleteCustomerDto: deleteCustomerDTO) {
+        return this.customerService.delete(deleteCustomerDto);
     }
 
 }
