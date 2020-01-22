@@ -1,7 +1,6 @@
 import { Schema } from 'mongoose';
 import { Tools } from '../../common/tools/tools';
-import { hash, compare } from 'bcrypt';
-import { IUser } from '../../common/interfaces/interfaces';
+import { compare } from 'bcrypt';
 
 export const userSchema = new Schema({
     name: {

@@ -5,6 +5,9 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { passwordResetDTO } from '../common/dtos/passwordReset.dto';
 import { passwordNewDTO } from '../common/dtos/passwordNew.dto';
+import { changePasswordDTO } from '../common/dtos/changePassword.dto';
+import { AuthUserId } from './decorator/auth-decorators.decorator';
+import { changeProfileDTO } from '../common/dtos/changeProfile.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -39,5 +42,15 @@ export class AuthController {
         } catch ( error ) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST);
         }
+    }
+    @UseGuards(AuthGuard('jwt'))
+    @Post('change-password')
+    async changePassword(changePasswordDto: changePasswordDTO, @AuthUserId() userId) {
+        return await this.authService.changePassword(changePasswordDto, userId);
+    }
+    @UseGuards(AuthGuard('jwt'))
+    @Post('change-profile')
+    async changeProfile(changeProfileDto: changeProfileDTO, @AuthUserId() userId) {
+        return await this.authService.changeProfile(changeProfileDto, userId);
     }
 }

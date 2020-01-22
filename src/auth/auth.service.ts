@@ -9,12 +9,14 @@ import { modelName } from '../database/model-names';
 import { Model } from 'mongoose';
 import { sesionDTO } from '../common/dtos/sesion.dto';
 import { signUpDTO } from '../common/dtos/signup.dto';
-import { passwordResetDTO } from 'src/common/dtos/passwordReset.dto';
-import { passwordNewDTO } from 'src/common/dtos/passwordNew.dto';
-import { MailerService } from 'src/core/services/mailer.service';
+import { passwordResetDTO } from '../common/dtos/passwordReset.dto';
+import { passwordNewDTO } from '../common/dtos/passwordNew.dto';
+import { changePasswordDTO } from '../common/dtos/changePassword.dto';
+import { MailerService } from '../core/services/mailer.service';
 import { v1 } from 'uuid';
 import { hash } from 'bcrypt';
 import * as moment from 'moment';
+import { changeProfileDTO } from '../common/dtos/changeProfile.dto';
 
 @Injectable()
 export class AuthService {
@@ -71,7 +73,7 @@ export class AuthService {
         }
     }
 
-    public async passwordNew(passwordNewAttempt: passwordNewDTO): Promise<any> {
+    public async passwordNew(passwordNewAttempt: passwordNewDTO): Promise<IUser> {
         const isMatch = await this.passwordResetModel.findOne({uuid: passwordNewAttempt.uuid});
         if (!isMatch) {
             throw new HttpException('password reset token expired', HttpStatus.BAD_REQUEST);
@@ -86,6 +88,27 @@ export class AuthService {
                 await isMatch.remove();
                 return user;
             }
+        }
+    }
+    public async changePassword(changePasswordDto: changePasswordDTO, userId: string): Promise<IAuthResponse> {
+        const user = await this.userService.findById(userId);
+        if (!user) {
+            throw new HttpException('not user found', HttpStatus.BAD_REQUEST);
+        } else {
+            const hashed  = await hash(changePasswordDto.newPassword, 10);
+            user.password = hashed;
+            await user.save();
+            return this.createJwtPayload(user);
+        }
+    }
+    public async changeProfile(changeProfileDto: changeProfileDTO, userId: string): Promise<IUser> {
+        const user = await this.userService.findById(userId);
+        if (!user) {
+            throw new HttpException('not user found', HttpStatus.BAD_REQUEST);
+        } else {
+            user.name = changeProfileDto.name;
+            await user.save();
+            return user;
         }
     }
     public async logout( token: string ): Promise<ISesion> {
