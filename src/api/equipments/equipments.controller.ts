@@ -6,7 +6,6 @@ import { deleteEquimentDTO } from '../../common/dtos/deleteEquipment.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('equipments')
-@Controller('customers')
 @UseGuards(AuthGuard('jwt'))
 export class EquipmentsController {
     constructor(private equipmentsService: EquipmentsService) {}
