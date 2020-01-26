@@ -1,3 +1,3 @@
 export class deleteCustomerDTO {
-    readonly id: string;
+    readonly _id: string;
 }

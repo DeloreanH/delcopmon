@@ -21,7 +21,7 @@ export class NonWorkingService {
         return await NonWorking.save();
     }
     public async update(updateNonWorkingDto: updateNonWorkingDTO): Promise<INonWorking> {
-        const NonWorking = await this.findById(updateNonWorkingDto.id);
+        const NonWorking = await this.findById(updateNonWorkingDto._id);
         if (!NonWorking) {
             throw new HttpException('NonWorking not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -31,7 +31,7 @@ export class NonWorkingService {
         }
     }
     public async delete(deleteNonWorkingDto: deleteNonWorkingDTO): Promise<INonWorking> {
-        const NonWorking = await this.findById(deleteNonWorkingDto.id);
+        const NonWorking = await this.findById(deleteNonWorkingDto._id);
         if (!NonWorking) {
             throw new HttpException('NonWorking not found', HttpStatus.BAD_REQUEST);
         } else {

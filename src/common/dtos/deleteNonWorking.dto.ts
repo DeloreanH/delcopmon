@@ -1,3 +1,3 @@
 export class deleteNonWorkingDTO {
-    readonly id: string;
+    readonly _id: string;
 }

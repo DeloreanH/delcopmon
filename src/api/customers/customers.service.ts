@@ -21,7 +21,7 @@ export class CustomersService {
         return await customer.save();
     }
     public async update(updateCustomerDto: updateCustomerDTO): Promise<ICustomer> {
-        const customer = await this.findById(updateCustomerDto.id);
+        const customer = await this.findById(updateCustomerDto._id);
         if (!customer) {
             throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -35,7 +35,7 @@ export class CustomersService {
         }
     }
     public async delete(deleteCustomerDto: deleteCustomerDTO): Promise<ICustomer> {
-        const customer = await this.findById(deleteCustomerDto.id);
+        const customer = await this.findById(deleteCustomerDto._id);
         if (!customer) {
             throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
         } else {

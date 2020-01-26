@@ -1,5 +1,5 @@
 export class updateEquimentDTO {
-    readonly id: string;
+    readonly _id: string;
     readonly modell: string;
     readonly code: string;
     readonly name: string;

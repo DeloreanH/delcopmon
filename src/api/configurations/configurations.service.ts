@@ -22,7 +22,7 @@ export class ConfigurationsService {
         return await customer.save();
     }
     public async update(updateConfigurationsDto: updateConfigurationsDTO): Promise<IConfigurations> {
-        const configurations = await this.findById(updateConfigurationsDto.id);
+        const configurations = await this.findById(updateConfigurationsDto._id);
         if (!configurations) {
             throw new HttpException('configurations not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -32,7 +32,7 @@ export class ConfigurationsService {
         }
     }
     public async delete(deleteConfigurationsDto: deleteConfigurationsDTO): Promise<IConfigurations> {
-        const configurations = await this.findById(deleteConfigurationsDto.id);
+        const configurations = await this.findById(deleteConfigurationsDto._id);
         if (!configurations) {
             throw new HttpException('configurations not found', HttpStatus.BAD_REQUEST);
         } else {

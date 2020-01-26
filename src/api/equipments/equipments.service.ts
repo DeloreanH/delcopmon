@@ -21,7 +21,7 @@ export class EquipmentsService {
         return await equipment.save();
     }
     public async update(updateEquimentDto: updateEquimentDTO): Promise<IEquipment> {
-        const equipment = await this.findById(updateEquimentDto.id);
+        const equipment = await this.findById(updateEquimentDto._id);
         if (!equipment) {
             throw new HttpException('equipment not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -33,7 +33,7 @@ export class EquipmentsService {
         }
     }
     public async delete(deleteEquimentDto: deleteEquimentDTO): Promise<IEquipment> {
-        const equipment = await this.findById(deleteEquimentDto.id);
+        const equipment = await this.findById(deleteEquimentDto._id);
         if (!equipment) {
             throw new HttpException('equipment not found', HttpStatus.BAD_REQUEST);
         } else {

@@ -1,3 +1,3 @@
 export class deleteEquimentDTO {
-    readonly id: string;
+    readonly _id: string;
 }

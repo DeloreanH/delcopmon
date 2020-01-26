@@ -1,5 +1,5 @@
 export class updateCustomerDTO {
-    readonly id: string;
+    readonly _id: string;
     readonly customerName: string;
     readonly rif: string;
     readonly address: string;
