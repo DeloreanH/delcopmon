@@ -13,6 +13,9 @@ export class UserService {
     public async findByProperties(param: any[]): Promise<IUser> {
         return await this.userModel.findOne({ $or: param });
     }
+    public async findAll(): Promise<IUser[]> {
+        return await this.userModel.find({});
+    }
     public async findById(id: string): Promise<IUser> {
         return await this.userModel.findOne({_id: id});
     }
@@ -27,7 +30,7 @@ export class UserService {
     public async findByIdAndUpdate(id: string, data: any): Promise<IUser> {
         return await this.userModel.findOneAndUpdate({_id: id}, data, {new: true} );
     }
-    public async createUSer(user: any): Promise<IUser> {
+    public async createUser(user: any): Promise<IUser> {
         const createdUser = new this.userModel(user);
         return await createdUser.save();
     }

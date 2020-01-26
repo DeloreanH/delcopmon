@@ -5,6 +5,7 @@ export interface IUser extends Document {
     email: string;
     password?: string;
     role: string;
+    sysAccess: boolean;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
