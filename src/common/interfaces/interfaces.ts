@@ -61,3 +61,10 @@ export interface IEquipment extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface INonWorking extends Document {
+    date: Date;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
