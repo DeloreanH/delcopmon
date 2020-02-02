@@ -6,6 +6,7 @@ import { INonWorking } from '../../common/interfaces/interfaces';
 import { createNonWorkingDTO } from '../../common/dtos/createNonWorking.dto';
 import { updateNonWorkingDTO } from '../../common/dtos/updateNonWorking.dto';
 import { deleteNonWorkingDTO } from '../../common/dtos/deleteNonWorking.dto';
+import { restoreNonWorkingDTO } from '../../common/dtos/restoreNonWorking.dto';
 
 @Injectable()
 export class NonWorkingService {
@@ -14,7 +15,10 @@ export class NonWorkingService {
     ) {}
 
     public async list(): Promise<INonWorking[]> {
-        return await this.NonWorkingModel.find({});
+        return await this.NonWorkingModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<INonWorking[]> {
+        return await this.NonWorkingModel.find({ deleted: { $ne: false } });
     }
     public async create(createNonWorkingDto: createNonWorkingDTO): Promise<INonWorking> {
         const NonWorking = new this.NonWorkingModel(createNonWorkingDto);
@@ -35,7 +39,17 @@ export class NonWorkingService {
         if (!NonWorking) {
             throw new HttpException('NonWorking not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await NonWorking.remove();
+            NonWorking.deleted = true;
+            return await NonWorking.save();
+        }
+    }
+    public async restore(restoreNonWorkingDto: restoreNonWorkingDTO): Promise<INonWorking> {
+        const NonWorking = await this.findById(restoreNonWorkingDto._id);
+        if (!NonWorking) {
+            throw new HttpException('NonWorking not found', HttpStatus.BAD_REQUEST);
+        } else {
+            NonWorking.deleted = false;
+            return await NonWorking.save();
         }
     }
     public async findById(id: string): Promise<INonWorking> {

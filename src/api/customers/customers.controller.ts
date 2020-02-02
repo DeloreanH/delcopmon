@@ -4,6 +4,7 @@ import { CustomersService } from './customers.service';
 import { createCustomerDTO } from '../../common/dtos/createCustomer.dto';
 import { updateCustomerDTO } from '../../common/dtos/updateCustomer.dto';
 import { deleteCustomerDTO } from '../../common/dtos/deleteCustomer.dto';
+import { restoreCustomerDTO } from '../../common/dtos/restoreCustomer.dto';
 
 @Controller('customers')
 @UseGuards(AuthGuard('jwt'))
@@ -13,6 +14,10 @@ export class CustomersController {
     @Get('list')
     async list() {
         return this.customerService.list();
+    }
+    @Get('list-trashed')
+    async listTrashed() {
+        return this.customerService.listTrashed();
     }
     @Post('create')
     async create(@Body() createCustomerDto: createCustomerDTO) {
@@ -25,6 +30,10 @@ export class CustomersController {
     @Post('delete')
     async delete(@Body() deleteCustomerDto: deleteCustomerDTO) {
         return this.customerService.delete(deleteCustomerDto);
+    }
+    @Post('restore')
+    async restore(@Body() restoreCustomerDto: restoreCustomerDTO) {
+        return this.customerService.restore(restoreCustomerDto);
     }
 
 }

@@ -5,6 +5,7 @@ import { NonWorkingService } from './non-working.service';
 import { createNonWorkingDTO } from '../../common/dtos/createNonWorking.dto';
 import { updateNonWorkingDTO } from '../../common/dtos/updateNonWorking.dto';
 import { deleteNonWorkingDTO } from '../../common/dtos/deleteNonWorking.dto';
+import { restoreNonWorkingDTO } from '../../common/dtos/restoreNonWorking.dto';
 
 @Controller('nonworking')
 @UseGuards(AuthGuard('jwt'))
@@ -14,6 +15,10 @@ export class NonWorkingController {
     @Get('list')
     async list(): Promise<INonWorking[]> {
         return this.nonWorkingService.list();
+    }
+    @Get('list-trashed')
+    async listTrashed(): Promise<INonWorking[]> {
+        return this.nonWorkingService.listTrashed();
     }
     @Post('create')
     async create(@Body() createnonWorkingDto: createNonWorkingDTO): Promise<INonWorking> {
@@ -26,5 +31,9 @@ export class NonWorkingController {
     @Post('delete')
     async delete(@Body() deletenonWorkingDto: deleteNonWorkingDTO): Promise<INonWorking> {
         return this.nonWorkingService.delete(deletenonWorkingDto);
+    }
+    @Post('restore')
+    async restore(@Body() restorenonWorkingDto: restoreNonWorkingDTO): Promise<INonWorking> {
+        return this.nonWorkingService.restore(restorenonWorkingDto);
     }
 }

@@ -8,5 +8,8 @@ export const NonworkingSchema = new Schema({
     description: {
         type: String,
     },
-
+    deleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true});

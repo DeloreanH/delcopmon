@@ -14,7 +14,10 @@ export class UserService {
         return await this.userModel.findOne({ $or: param });
     }
     public async findAll(): Promise<IUser[]> {
-        return await this.userModel.find({});
+        return await this.userModel.find({ deleted: { $ne: true } });
+    }
+    public async findTrashed(): Promise<IUser[]> {
+        return await this.userModel.find({ deleted: { $ne: false } });
     }
     public async findById(id: string): Promise<IUser> {
         return await this.userModel.findOne({_id: id});

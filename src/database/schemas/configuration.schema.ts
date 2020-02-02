@@ -8,5 +8,8 @@ export const ConfigurationSchema = new Schema({
     value: {
         type: Object,
     },
-
+    deleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true});

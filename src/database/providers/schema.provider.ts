@@ -8,7 +8,7 @@ import { CustomerSchema } from '../schemas/customer.schema';
 import { CustomerEquipmentSchema } from '../schemas/customerEquipments.schema';
 import { EquipmentSchema } from '../schemas/equipment.schema';
 import { MaintenanceSchema } from '../schemas/maintenance.schema';
-import { NonworkingSchema } from '../schemas/nonworking';
+import { NonworkingSchema } from '../schemas/nonworking.schema';
 
 export const schemaProvider = [
     MongooseModule.forFeature([

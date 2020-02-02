@@ -1,10 +1,11 @@
 import { Controller, Body, Post, UseGuards} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from '../../common/guards/admin.guards.middleware';
 import { AdminService } from './admin.service';
 import { createUserDTO } from '../../common/dtos/createUser.dto';
 import { IUser } from '../../common/interfaces/interfaces';
-import { EnableDisableUserDTO } from 'src/common/dtos/enableDisableUser.dto';
-import { AdminGuard } from '../../common/guards/admin.guards.middleware';
+import { deleteUserDTO } from '../../common/dtos/deleteUser.dto';
+import { restoreUserDTO } from '../../common/dtos/restoreUser.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard('jwt'), AdminGuard )
@@ -12,10 +13,13 @@ export class AdminController {
     constructor(private adminService: AdminService) {}
 
     @Post('list-users')
-    async list(@Body() createAdmin: createUserDTO): Promise<IUser[]> {
+    async list(): Promise<IUser[]> {
         return this.adminService.list();
     }
-
+    @Post('list-users-trashed')
+    async listTrashed(): Promise<IUser[]> {
+        return this.adminService.listTrashed();
+    }
     @Post('create-admin')
     async createAdmin(@Body() createAdmin: createUserDTO): Promise<IUser> {
         return this.adminService.createAdmin(createAdmin);
@@ -24,12 +28,12 @@ export class AdminController {
     async createUser(@Body() createUser: createUserDTO): Promise<IUser> {
         return this.adminService.createUser(createUser);
     }
-    @Post('disable-user')
-    async disableUser(@Body() EnableDisableUser: EnableDisableUserDTO): Promise<IUser> {
-        return this.adminService.disableUser(EnableDisableUser);
+    @Post('delete-user')
+    async deleteUser(@Body() deleteUserDto: deleteUserDTO): Promise<IUser> {
+        return this.adminService.deleteUser(deleteUserDto);
     }
-    @Post('enable-user')
-    async enableUser(@Body() EnableDisableUser: EnableDisableUserDTO): Promise<IUser> {
-        return this.adminService.enableUser(EnableDisableUser);
+    @Post('restore-user')
+    async restoreUser(@Body() restoreUserDto: restoreUserDTO): Promise<IUser> {
+        return this.adminService.restoreUser(restoreUserDto);
     }
 }

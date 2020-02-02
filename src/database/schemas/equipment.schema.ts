@@ -15,4 +15,8 @@ export const EquipmentSchema = new Schema({
     brand: {
         type: String,
     },
+    deleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true});

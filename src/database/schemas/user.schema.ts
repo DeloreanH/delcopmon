@@ -21,9 +21,9 @@ export const userSchema = new Schema({
         enum : ['admin', 'basic'],
         default: 'basic',
     },
-    sysAccess: {
+    deleted: {
         type: Boolean,
-        default: true,
+        default: false,
     },
 }, {timestamps: true});
 

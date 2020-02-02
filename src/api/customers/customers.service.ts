@@ -3,9 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { modelName } from '../../database/model-names';
 import { Model } from 'mongoose';
 import { ICustomer } from '../../common/interfaces/interfaces';
-import { createCustomerDTO } from 'src/common/dtos/createCustomer.dto';
-import { updateCustomerDTO } from 'src/common/dtos/updateCustomer.dto';
-import { deleteCustomerDTO } from 'src/common/dtos/deleteCustomer.dto';
+import { createCustomerDTO } from '../../common/dtos/createCustomer.dto';
+import { updateCustomerDTO } from '../../common/dtos/updateCustomer.dto';
+import { deleteCustomerDTO } from '../../common/dtos/deleteCustomer.dto';
+import { restoreCustomerDTO } from '../../common/dtos/restoreCustomer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -14,7 +15,10 @@ export class CustomersService {
     ) {}
 
     public async list(): Promise<ICustomer[]> {
-        return await this.customerModel.find({});
+        return await this.customerModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<ICustomer[]> {
+        return await this.customerModel.find({ deleted: { $ne: false } });
     }
     public async create(createCustomerDto: createCustomerDTO): Promise<ICustomer> {
         const customer = new this.customerModel(createCustomerDto);
@@ -39,7 +43,17 @@ export class CustomersService {
         if (!customer) {
             throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await customer.remove();
+            customer.deleted = true;
+            return await customer.save();
+        }
+    }
+    public async restore(restoreCustomerDto: restoreCustomerDTO): Promise<ICustomer> {
+        const customer = await this.findById(restoreCustomerDto._id);
+        if (!customer) {
+            throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
+        } else {
+            customer.deleted = false;
+            return await customer.save();
         }
     }
     public async findById(id: string): Promise<ICustomer> {

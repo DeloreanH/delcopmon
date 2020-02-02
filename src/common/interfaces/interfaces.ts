@@ -5,7 +5,7 @@ export interface IUser extends Document {
     email: string;
     password?: string;
     role: string;
-    sysAccess: boolean;
+    deleted: boolean;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -45,6 +45,7 @@ export interface ICustomer extends Document {
     referenceAddress: string;
     createdAt: Date;
     updatedAt: Date;
+    deleted: boolean;
 }
 
 export interface IConfigurations extends Document {
@@ -52,6 +53,7 @@ export interface IConfigurations extends Document {
     value: object;
     createdAt: Date;
     updatedAt: Date;
+    deleted: boolean;
 }
 
 export interface IEquipment extends Document {
@@ -61,6 +63,7 @@ export interface IEquipment extends Document {
     brand: string;
     createdAt: Date;
     updatedAt: Date;
+    deleted: boolean;
 }
 
 export interface INonWorking extends Document {
@@ -68,4 +71,5 @@ export interface INonWorking extends Document {
     description: string;
     createdAt: Date;
     updatedAt: Date;
+    deleted: boolean;
 }

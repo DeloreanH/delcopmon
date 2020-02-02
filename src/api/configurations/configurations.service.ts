@@ -6,6 +6,7 @@ import { IConfigurations } from '../../common/interfaces/interfaces';
 import { createConfigurationsDTO } from '../../common/dtos/createConfigurations.dto';
 import { updateConfigurationsDTO } from '../../common/dtos/updateConfigurations.dto';
 import { deleteConfigurationsDTO } from '../../common/dtos/deleteConfigurations.dto';
+import { restoreConfigurationsDTO } from '../../common/dtos/restoreConfigurations.dto';
 
 @Injectable()
 export class ConfigurationsService {
@@ -15,7 +16,10 @@ export class ConfigurationsService {
     ) {}
 
     public async list(): Promise<IConfigurations[]> {
-        return await this.configurationsModel.find({});
+        return await this.configurationsModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<IConfigurations[]> {
+        return await this.configurationsModel.find({ deleted: { $ne: false } });
     }
     public async create(createConfigurationsDto: createConfigurationsDTO): Promise<IConfigurations> {
         const customer = new this.configurationsModel(createConfigurationsDto);
@@ -36,7 +40,17 @@ export class ConfigurationsService {
         if (!configurations) {
             throw new HttpException('configurations not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await configurations.remove();
+            configurations.deleted = true;
+            return await configurations.save();
+        }
+    }
+    public async restore(restoreConfigurationsDto: restoreConfigurationsDTO): Promise<IConfigurations> {
+        const configurations = await this.findById(restoreConfigurationsDto._id);
+        if (!configurations) {
+            throw new HttpException('configurations not found', HttpStatus.BAD_REQUEST);
+        } else {
+            configurations.deleted = false;
+            return await configurations.save();
         }
     }
     public async findById(id: string): Promise<IConfigurations> {

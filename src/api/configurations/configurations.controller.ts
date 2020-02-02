@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { createConfigurationsDTO } from '../../common/dtos/createConfigurations.dto';
 import { updateConfigurationsDTO } from '../../common/dtos/updateConfigurations.dto';
 import { deleteConfigurationsDTO } from '../../common/dtos/deleteConfigurations.dto';
+import { restoreConfigurationsDTO } from '../../common/dtos/restoreConfigurations.dto';
 
 @Controller('configurations')
 @UseGuards(AuthGuard('jwt'))
@@ -13,6 +14,10 @@ export class ConfigurationsController {
     @Get('list')
     async list() {
         return this.configurationsService.list();
+    }
+    @Get('list-trashed')
+    async listTrashed() {
+        return this.configurationsService.listTrashed();
     }
     @Post('create')
     async create(@Body() createConfigurationsDto: createConfigurationsDTO) {
@@ -25,5 +30,9 @@ export class ConfigurationsController {
     @Post('delete')
     async delete(@Body() deleteConfigurationsDto: deleteConfigurationsDTO) {
         return this.configurationsService.delete(deleteConfigurationsDto);
+    }
+    @Post('restore')
+    async restore(@Body() restoreConfigurationsDto: restoreConfigurationsDTO) {
+        return this.configurationsService.restore(restoreConfigurationsDto);
     }
 }

@@ -21,4 +21,8 @@ export const CustomerSchema = new Schema({
     referenceAddress: {
         type: String,
     },
+    deleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true});
