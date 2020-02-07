@@ -3,7 +3,7 @@ import { UserService } from '../../core/services/user.service';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-    constructor(private userServ: UserService){}
+    constructor(private userServ: UserService) {}
   async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {

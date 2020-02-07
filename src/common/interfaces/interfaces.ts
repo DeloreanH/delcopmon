@@ -50,10 +50,9 @@ export interface ICustomer extends Document {
 
 export interface IConfigurations extends Document {
     name: string;
-    value: object;
+    value: any;
     createdAt: Date;
     updatedAt: Date;
-    deleted: boolean;
 }
 
 export interface IEquipment extends Document {

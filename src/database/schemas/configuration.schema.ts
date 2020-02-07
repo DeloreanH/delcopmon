@@ -6,10 +6,6 @@ export const ConfigurationSchema = new Schema({
         unique: true,
     },
     value: {
-        type: Object,
-    },
-    deleted: {
-        type: Boolean,
-        default: false,
+        type: Schema.Types.Mixed,
     },
 }, {timestamps: true});

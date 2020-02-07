@@ -1,4 +1,5 @@
+import { configurationsDTO } from './configurations.dto';
+
 export class createConfigurationsDTO {
-    readonly name: string;
-    readonly value: object;
+    readonly configurations: configurationsDTO[];
 }
