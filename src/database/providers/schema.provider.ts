@@ -9,6 +9,7 @@ import { CustomerEquipmentSchema } from '../schemas/customerEquipments.schema';
 import { EquipmentSchema } from '../schemas/equipment.schema';
 import { MaintenanceSchema } from '../schemas/maintenance.schema';
 import { NonworkingSchema } from '../schemas/nonworking.schema';
+import { sparePartsSchema } from '../schemas/spareParts.schema';
 
 export const schemaProvider = [
     MongooseModule.forFeature([
@@ -21,5 +22,6 @@ export const schemaProvider = [
         { name: modelName.EQUIPMENT, schema: EquipmentSchema},
         { name: modelName.MAINTENANCE, schema: MaintenanceSchema},
         { name: modelName.NONWORKING, schema: NonworkingSchema},
+        { name: modelName.SPARE_PARTS, schema: sparePartsSchema},
     ]),
   ];

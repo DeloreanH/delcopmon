@@ -14,9 +14,6 @@ export const CustomerEquipmentSchema = new Schema({
         type: String,
         unique: true,
     },
-    price: {
-        type: Number,
-    },
     date: {
         type: Date,
     },

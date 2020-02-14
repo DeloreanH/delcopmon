@@ -5,6 +5,8 @@ import { EquipmentsModule } from './equipments/equipments.module';
 import { NonWorkingModule } from './nonworking/non-working.module';
 import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
+import { SparePartsModule } from './spare-parts/spare-parts.module';
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @Module({
     imports: [
@@ -14,6 +16,8 @@ import { UsersModule } from './users/users.module';
         NonWorkingModule,
         AdminModule,
         UsersModule,
+        SparePartsModule,
+        MaintenanceModule,
     ],
 })
 export class ApiModule {}

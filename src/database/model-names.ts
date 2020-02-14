@@ -8,4 +8,5 @@ export enum modelName {
     NONWORKING          = 'Nonworking',
     MAINTENANCE         = 'Maintenance',
     CONFIGURATIONS      = 'Configurations',
+    SPARE_PARTS         = 'SpareParts',
 }
