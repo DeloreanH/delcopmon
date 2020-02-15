@@ -47,20 +47,35 @@ export interface ICustomer extends Document {
     updatedAt: Date;
     deleted: boolean;
 }
+export interface ICustomerEquipments extends Document {
+    customerId: string;
+    equipmentId: string;
+    serial: string;
+    date: Date;
+    condition: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deleted: boolean;
+}
 export interface IMaintenance extends Document {
     date: Date;
     customerId: string;
     customerEquipmentsId: string;
     userId: string;
     spare: {
-        parts: [],
-    } | null;
+        parts: [IPart],
+    };
     maintenanceType: string;
     priority: string;
     description: string;
     createdAt: Date;
     updatedAt: Date;
     deleted: boolean;
+}
+
+export interface IPart {
+    partId: string;
+    partDate: Date;
 }
 
 export interface IConfigurations extends Document {

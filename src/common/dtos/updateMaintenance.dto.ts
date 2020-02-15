@@ -1,3 +1,4 @@
+import { PartDTO } from './part.dto';
 export class updateMaintenanceDTO {
     readonly _id: string;
     readonly name: string;
@@ -6,7 +7,7 @@ export class updateMaintenanceDTO {
     readonly customerEquipmentsId: string;
     readonly userId: string;
     readonly spare: {
-        parts: [],
+        parts: [PartDTO],
     } | null;
     readonly maintenanceType: string;
     readonly priority: string;

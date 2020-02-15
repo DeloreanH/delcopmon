@@ -2,11 +2,11 @@ import { Schema } from 'mongoose';
 import { modelName } from '../model-names';
 
 export const CustomerEquipmentSchema = new Schema({
-    customer_id: {
+    customerId: {
         type: Schema.Types.ObjectId,
         ref: modelName.CUSTOMER,
     },
-    equipment_id: {
+    equipmentId: {
         type: Schema.Types.ObjectId,
         ref: modelName.EQUIPMENT,
     },
@@ -19,5 +19,9 @@ export const CustomerEquipmentSchema = new Schema({
     },
     condition: {
         type: String,
+    },
+    deleted: {
+        type: Boolean,
+        default: false,
     },
 }, {timestamps: true});
