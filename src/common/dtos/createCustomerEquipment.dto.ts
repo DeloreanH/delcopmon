@@ -3,7 +3,6 @@ export class createCustomerEquipmentDTO {
     readonly customerId: string;
     readonly equipmentId: string;
     readonly serial: string;
-    readonly date: Date;
     readonly condition: string;
     readonly deleted: boolean;
 }

@@ -51,7 +51,7 @@ export interface ICustomerEquipments extends Document {
     customerId: string;
     equipmentId: string;
     serial: string;
-    date: Date;
+    lastUpdated: Date;
     condition: string;
     createdAt: Date;
     updatedAt: Date;

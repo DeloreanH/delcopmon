@@ -14,7 +14,7 @@ export const CustomerEquipmentSchema = new Schema({
         type: String,
         unique: true,
     },
-    date: {
+    lastUpdated: {
         type: Date,
     },
     condition: {

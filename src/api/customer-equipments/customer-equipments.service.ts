@@ -7,6 +7,8 @@ import { createCustomerEquipmentDTO } from '../../common/dtos/createCustomerEqui
 import { updateCustomerEquipmentDTO } from '../../common/dtos/updateCustomerEquipment.dto';
 import { deleteCustomerEquipmentDTO } from '../../common/dtos/deleteCustomerEquipment.dto';
 import { restoreCustomerEquipmentDTO } from '../../common/dtos/restoreCustomerEquipment.dto';
+import { customerEquipmentsRangesDTO } from '../../common/dtos/customerEquipmentsRanges.dto';
+import * as moment from 'moment';
 
 @Injectable()
 export class CustomerEquipmentsService {
@@ -21,7 +23,8 @@ export class CustomerEquipmentsService {
         return await this.customerEquipmentModel.find({ deleted: { $ne: false } });
     }
     public async create(createCustomerEquipmentDto: createCustomerEquipmentDTO): Promise<ICustomerEquipments> {
-        const customerEquipment = new this.customerEquipmentModel(createCustomerEquipmentDto);
+        const toSave = Object.assign({}, createCustomerEquipmentDto, {lastUpdated: moment().toDate()});
+        const customerEquipment = new this.customerEquipmentModel(toSave);
         return await customerEquipment.save();
     }
     public async update(updateCustomerEquipmentDto: updateCustomerEquipmentDTO): Promise<ICustomerEquipments> {
@@ -32,7 +35,7 @@ export class CustomerEquipmentsService {
             customerEquipment.customerId  = updateCustomerEquipmentDto.customerId;
             customerEquipment.equipmentId = updateCustomerEquipmentDto.equipmentId;
             customerEquipment.serial      = updateCustomerEquipmentDto.serial;
-            customerEquipment.date        = updateCustomerEquipmentDto.date;
+            customerEquipment.lastUpdated = moment().toDate();
             customerEquipment.condition   = updateCustomerEquipmentDto.condition;
             return await customerEquipment.save();
         }
@@ -54,6 +57,14 @@ export class CustomerEquipmentsService {
             customerEquipment.deleted = false;
             return await customerEquipment.save();
         }
+    }
+    public async findWhereDates(customerEquipmentsRangesDto: customerEquipmentsRangesDTO) {
+        return await this.customerEquipmentModel.find({
+            lastUpdated: {
+                $gte: customerEquipmentsRangesDto.startDate,
+                $lt:  customerEquipmentsRangesDto.endDate,
+            },
+        });
     }
     public async findById(id: string): Promise<ICustomerEquipments> {
         return await this.customerEquipmentModel.findOne({_id: id});

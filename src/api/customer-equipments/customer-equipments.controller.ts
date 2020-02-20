@@ -5,6 +5,7 @@ import { createCustomerEquipmentDTO } from '../../common/dtos/createCustomerEqui
 import { updateCustomerEquipmentDTO } from '../../common/dtos/updateCustomerEquipment.dto';
 import { deleteCustomerEquipmentDTO } from '../../common/dtos/deleteCustomerEquipment.dto';
 import { restoreCustomerEquipmentDTO } from '../../common/dtos/restoreCustomerEquipment.dto';
+import { customerEquipmentsRangesDTO } from 'src/common/dtos/customerEquipmentsRanges.dto';
 
 @Controller('customer-equipments')
 @UseGuards(AuthGuard('jwt'))
@@ -34,5 +35,9 @@ export class CustomerEquipmentsController {
     @Post('restore')
     async restore(@Body() restoreCustomerEquipmentDto: restoreCustomerEquipmentDTO) {
         return this.customerEquipmentsService.restore(restoreCustomerEquipmentDto);
+    }
+    @Post('where-dates')
+    async whereDates(@Body() customerEquipmentsRangesDto: customerEquipmentsRangesDTO) {
+        return this.customerEquipmentsService.findWhereDates(customerEquipmentsRangesDto);
     }
 }
