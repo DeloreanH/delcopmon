@@ -1,9 +1,11 @@
 import { IsNotEmpty, IsString, IsMongoId } from 'class-validator';
 
-export class configurationsDTO {
+export class changeRolDTO {
     @IsNotEmpty()
     @IsString()
-    readonly name: string;
+    @IsMongoId()
+    readonly userId: string;
     @IsNotEmpty()
-    readonly value: any;
+    @IsString()
+    readonly rol: string;
 }

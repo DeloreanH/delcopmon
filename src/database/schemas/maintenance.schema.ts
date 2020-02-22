@@ -17,15 +17,15 @@ export const MaintenanceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.USER,
     },
-    spare: {
-        parts: [{
-            partId: {
-                type: Schema.Types.ObjectId,
-                ref: modelName.CUSTOMER_EQUIPMENTS,
-            },
-           partDate: Date,
-        }],
-      },
+    parts: [
+        {
+        partId: {
+            type: Schema.Types.ObjectId,
+            ref: modelName.CUSTOMER_EQUIPMENTS,
+        },
+        partDate: Date,
+       },
+    ],
     maintenanceType: {
         type: String,
         enum: ['Operativo', 'Parcialmente operativo', 'No operativo'],

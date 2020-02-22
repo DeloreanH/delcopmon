@@ -1,3 +1,8 @@
+import { IsNotEmpty, IsString, IsMongoId } from 'class-validator';
+
 export class restoreUserDTO {
-readonly userId: string;
+    @IsNotEmpty()
+    @IsString()
+    @IsMongoId()
+    readonly userId: string;
 }

@@ -5,6 +5,7 @@ import { createUserDTO} from '../../common/dtos/createUser.dto';
 import { hash } from 'bcrypt';
 import { deleteUserDTO } from '../../common/dtos/deleteUser.dto';
 import { restoreUserDTO } from '../../common/dtos/restoreUser.dto';
+import { changeRolDTO } from '../../common/dtos/chagenRol.dto';
 
 @Injectable()
 export class AdminService {
@@ -22,6 +23,15 @@ export class AdminService {
             return savedAdmin;
         }
     }
+    public async changeRol(changeRol: changeRolDTO): Promise<IUser> {
+        const user = await this.userService.findById(changeRol.userId);
+        if ( !user) {
+            throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
+        } else {
+            user.role = changeRol.rol;
+            return await user.save();
+        }
+    }
 
     public async createUser(createUser: createUserDTO): Promise<IUser> {
         const match = await this.userService.findOneByEmail(createUser.email);
@@ -31,8 +41,7 @@ export class AdminService {
             const user      = Object.assign({}, createUser, { role: 'basic'});
             const hashed    = await hash(user.password, 10);
             user.password   = hashed;
-            const savedUser = await this.userService.createUser(user);
-            return savedUser;
+            return await this.userService.createUser(user);
         }
     }
     public async list(): Promise<IUser[]> {

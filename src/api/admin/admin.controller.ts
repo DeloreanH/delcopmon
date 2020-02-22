@@ -6,6 +6,7 @@ import { createUserDTO } from '../../common/dtos/createUser.dto';
 import { IUser } from '../../common/interfaces/interfaces';
 import { deleteUserDTO } from '../../common/dtos/deleteUser.dto';
 import { restoreUserDTO } from '../../common/dtos/restoreUser.dto';
+import { changeRolDTO } from '../../common/dtos/chagenRol.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard('jwt'), AdminGuard )
@@ -19,6 +20,10 @@ export class AdminController {
     @Post('list-users-trashed')
     async listTrashed(): Promise<IUser[]> {
         return this.adminService.listTrashed();
+    }
+    @Post('change-rol')
+    async changeRol(@Body() changeRolDto: changeRolDTO): Promise<IUser> {
+        return this.adminService.changeRol(changeRolDto);
     }
     @Post('create-admin')
     async createAdmin(@Body() createAdmin: createUserDTO): Promise<IUser> {

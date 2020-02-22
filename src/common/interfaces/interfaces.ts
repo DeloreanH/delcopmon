@@ -62,9 +62,7 @@ export interface IMaintenance extends Document {
     customerId: string;
     customerEquipmentsId: string;
     userId: string;
-    spare: {
-        parts: [IPart],
-    };
+    parts: [IPart];
     maintenanceType: string;
     priority: string;
     description: string;
