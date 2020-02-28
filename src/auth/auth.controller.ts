@@ -45,12 +45,12 @@ export class AuthController {
     }
     @UseGuards(AuthGuard('jwt'))
     @Post('change-password')
-    async changePassword(changePasswordDto: changePasswordDTO, @AuthUserId() userId) {
+    async changePassword(@Body() changePasswordDto: changePasswordDTO, @AuthUserId() userId) {
         return await this.authService.changePassword(changePasswordDto, userId);
     }
     @UseGuards(AuthGuard('jwt'))
     @Post('change-profile')
-    async changeProfile(changeProfileDto: changeProfileDTO, @AuthUserId() userId) {
+    async changeProfile(@Body() changeProfileDto: changeProfileDTO, @AuthUserId() userId) {
         return await this.authService.changeProfile(changeProfileDto, userId);
     }
 }
