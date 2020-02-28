@@ -56,4 +56,27 @@ export class MailerService {
             }
         });
     }
+    public async sendGeneratedPAssword(email, password): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const transporter = await this.createTransporter();
+                const html = await this.readHTMLFile(join(__dirname, '../..', 'common/templates/generate-account.html'));
+                const template = compile(html);
+                const replacements = {
+                    new_password: password,
+                };
+                const htmlToSend = template(replacements);
+                const mailOptions = {
+                    from: 'test@api.com',
+                    to : email,
+                    subject : 'cuenta creada',
+                    html : htmlToSend,
+                 };
+                await transporter.sendMail(mailOptions);
+                resolve(true);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 }

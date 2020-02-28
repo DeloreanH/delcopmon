@@ -6,23 +6,12 @@ import { hash } from 'bcrypt';
 import { deleteUserDTO } from '../../common/dtos/deleteUser.dto';
 import { restoreUserDTO } from '../../common/dtos/restoreUser.dto';
 import { changeRolDTO } from '../../common/dtos/chagenRol.dto';
+import { MailerService } from '../../core/services/mailer.service';
 
 @Injectable()
 export class AdminService {
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService, private mailer: MailerService) {}
 
-    public async createAdmin(createAdmin: createUserDTO): Promise<IUser> {
-        const match = await this.userService.findOneByEmail(createAdmin.email);
-        if (match) {
-            throw new HttpException('Email Already Taken', HttpStatus.BAD_REQUEST);
-        } else {
-            const admin       = Object.assign({}, createAdmin, { role: 'admin'});
-            const hashed      = await hash(admin.password, 10);
-            admin.password    = hashed;
-            const savedAdmin = await this.userService.createUser(admin);
-            return savedAdmin;
-        }
-    }
     public async changeRol(changeRol: changeRolDTO): Promise<IUser> {
         const user = await this.userService.findById(changeRol.userId);
         if ( !user) {
@@ -38,9 +27,11 @@ export class AdminService {
         if (match) {
             throw new HttpException('Email Already Taken', HttpStatus.BAD_REQUEST);
         } else {
-            const user      = Object.assign({}, createUser, { role: 'basic'});
+            const password = this.makeId(8);
+            const user      = Object.assign({}, createUser, { password});
             const hashed    = await hash(user.password, 10);
             user.password   = hashed;
+            await this.mailer.sendGeneratedPAssword(user.email, password);
             return await this.userService.createUser(user);
         }
     }
@@ -69,5 +60,15 @@ export class AdminService {
             return await user.save();
         }
     }
+
+    public makeId(length: number) {
+        let result             = '';
+        const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        for ( let i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
 
 }

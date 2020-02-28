@@ -25,10 +25,6 @@ export class AdminController {
     async changeRol(@Body() changeRolDto: changeRolDTO): Promise<IUser> {
         return this.adminService.changeRol(changeRolDto);
     }
-    @Post('create-admin')
-    async createAdmin(@Body() createAdmin: createUserDTO): Promise<IUser> {
-        return this.adminService.createAdmin(createAdmin);
-    }
     @Post('create-user')
     async createUser(@Body() createUser: createUserDTO): Promise<IUser> {
         return this.adminService.createUser(createUser);
