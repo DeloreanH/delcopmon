@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsMongoId, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, IsMongoId, IsBoolean, IsDate } from 'class-validator';
 
 export class updateCustomerEquipmentDTO {
     @IsNotEmpty()
@@ -25,4 +25,10 @@ export class updateCustomerEquipmentDTO {
     @IsNotEmpty()
     @IsBoolean()
     readonly deleted: boolean;
+    @IsNotEmpty()
+    @IsDate()
+    lastUpdated: Date;
+    @IsNotEmpty()
+    @IsDate()
+    adquisitionDate: Date;
 }

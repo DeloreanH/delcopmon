@@ -37,6 +37,8 @@ export class CustomerEquipmentsService {
             customerEquipment.serial      = updateCustomerEquipmentDto.serial;
             customerEquipment.lastUpdated = moment().toDate();
             customerEquipment.condition   = updateCustomerEquipmentDto.condition;
+            customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
+            customerEquipment.adquisitionDate   = updateCustomerEquipmentDto.adquisitionDate;
             return await customerEquipment.save();
         }
     }

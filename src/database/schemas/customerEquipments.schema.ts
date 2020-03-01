@@ -17,6 +17,9 @@ export const CustomerEquipmentSchema = new Schema({
     lastUpdated: {
         type: Date,
     },
+    adquisitionDate: {
+        type: Date,
+    },
     condition: {
         type: String,
     },
