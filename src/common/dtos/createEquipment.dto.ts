@@ -9,8 +9,5 @@ export class createEquimentDTO {
     readonly code: string;
     @IsNotEmpty()
     @IsString()
-    readonly name: string;
-    @IsNotEmpty()
-    @IsString()
     readonly brand: string;
 }

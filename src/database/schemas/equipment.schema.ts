@@ -9,9 +9,6 @@ export const EquipmentSchema = new Schema({
         type: String,
         unique: true,
     },
-    name: {
-        type: String,
-    },
     brand: {
         type: String,
     },

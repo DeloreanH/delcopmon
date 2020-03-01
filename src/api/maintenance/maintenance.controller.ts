@@ -5,6 +5,7 @@ import { createMaintenanceDTO } from '../../common/dtos/createMaintenance.dto';
 import { updateMaintenanceDTO } from '../../common/dtos/updateMaintenance.dto';
 import { deleteMaintenanceDTO } from '../../common/dtos/deleteMaintenance.dto';
 import { restoreMaintenanceDTO } from '../../common/dtos/restoreMaintenance.dto';
+import { maintenanceRangesDTO } from '../../common/dtos/maintenanceRanges.dto';
 
 @Controller('maintenance')
 @UseGuards(AuthGuard('jwt'))
@@ -34,5 +35,9 @@ export class MaintenanceController {
     @Post('restore')
     async restore(@Body() restoreMaintenanceDto: restoreMaintenanceDTO) {
         return this.maintenanceService.restore(restoreMaintenanceDto);
+    }
+    @Post('where-dates')
+    async whereDates(@Body() maintenanceRangesDto: maintenanceRangesDTO) {
+        return this.maintenanceService.findWhereDates(maintenanceRangesDto);
     }
 }

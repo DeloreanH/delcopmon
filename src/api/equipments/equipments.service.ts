@@ -31,7 +31,6 @@ export class EquipmentsService {
         } else {
             equipment.modell = updateEquimentDto.modell;
             equipment.code   = updateEquimentDto.code;
-            equipment.name   = updateEquimentDto.name;
             equipment.brand  = updateEquimentDto.brand;
             return await equipment.save();
         }

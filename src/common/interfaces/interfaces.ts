@@ -87,7 +87,6 @@ export interface IConfigurations extends Document {
 export interface IEquipment extends Document {
     modell: string;
     code: string;
-    name: string;
     brand: string;
     createdAt: Date;
     updatedAt: Date;

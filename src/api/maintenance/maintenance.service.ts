@@ -7,6 +7,7 @@ import { createMaintenanceDTO } from '../../common/dtos/createMaintenance.dto';
 import { updateMaintenanceDTO } from '../../common/dtos/updateMaintenance.dto';
 import { deleteMaintenanceDTO } from '../../common/dtos/deleteMaintenance.dto';
 import { restoreMaintenanceDTO } from '../../common/dtos/restoreMaintenance.dto';
+import { maintenanceRangesDTO } from '../../common/dtos/maintenanceRanges.dto';
 
 @Injectable()
 export class MaintenanceService {
@@ -78,5 +79,13 @@ export class MaintenanceService {
     }
     public async findById(id: string): Promise<IMaintenance> {
         return await this.maintenanceModel.findOne({_id: id});
+    }
+    public async findWhereDates(maintenanceRangesDto: maintenanceRangesDTO) {
+        return await this.maintenanceModel.find({
+            date: {
+                $gte: maintenanceRangesDto.startDate,
+                $lt:  maintenanceRangesDto.endDate,
+            },
+        });
     }
 }
