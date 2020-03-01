@@ -1,5 +1,5 @@
 import { PartDTO } from './part.dto';
-import { IsDate, IsArray, IsNotEmpty, IsString, IsMongoId } from 'class-validator';
+import { IsDate, IsArray, IsNotEmpty, IsString, IsMongoId, IsOptional } from 'class-validator';
 
 export class createMaintenanceDTO {
     @IsNotEmpty()
@@ -16,7 +16,7 @@ export class createMaintenanceDTO {
     @IsString()
     @IsMongoId()
     readonly customerEquipmentsId: string;
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @IsMongoId()
     readonly userId: string;
@@ -28,10 +28,10 @@ export class createMaintenanceDTO {
     @IsNotEmpty()
     @IsString()
     readonly equipmentStatus: string;
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly priority: string;
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly description: string;
 }
