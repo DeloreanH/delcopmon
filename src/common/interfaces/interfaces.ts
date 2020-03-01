@@ -65,6 +65,7 @@ export interface IMaintenance extends Document {
     userId: string;
     parts: [IPart];
     maintenanceType: string;
+    equipmentStatus: string;
     priority: string;
     description: string;
     createdAt: Date;

@@ -30,6 +30,9 @@ export class updateMaintenanceDTO {
     readonly maintenanceType: string;
     @IsNotEmpty()
     @IsString()
+    readonly equipmentStatus: string;
+    @IsNotEmpty()
+    @IsString()
     readonly priority: string;
     @IsNotEmpty()
     @IsString()

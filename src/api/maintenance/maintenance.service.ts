@@ -23,13 +23,13 @@ export class MaintenanceService {
     }
     public async create(createMaintenanceDto: createMaintenanceDTO): Promise<IMaintenance> {
         const maintenance = new this.maintenanceModel(createMaintenanceDto);
-        if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(maintenance.maintenanceType) === -1) {
-            throw new HttpException('choose a valid maintenance type', HttpStatus.BAD_REQUEST);
+        if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(maintenance.equipmentStatus) === -1) {
+            throw new HttpException('choose a valid equipment status', HttpStatus.BAD_REQUEST);
         }
-        if (maintenance.maintenanceType === 'Parcialmente operativo' && maintenance.parts.length <= 0) {
+        if (maintenance.equipmentStatus === 'Parcialmente operativo' && maintenance.parts.length <= 0) {
             throw new HttpException('parcial type need parts', HttpStatus.BAD_REQUEST);
         }
-        if (maintenance.maintenanceType !== 'Parcialmente operativo' && maintenance.parts.length > 0) {
+        if (maintenance.equipmentStatus !== 'Parcialmente operativo' && maintenance.parts.length > 0) {
             throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
         }
         return await maintenance.save();
@@ -39,13 +39,13 @@ export class MaintenanceService {
         if (!maintenance) {
             throw new HttpException('Maintenance not found', HttpStatus.BAD_REQUEST);
         } else {
-            if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(maintenance.maintenanceType) === -1) {
-                throw new HttpException('choose a valid maintenance type', HttpStatus.BAD_REQUEST);
+            if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(maintenance.equipmentStatus) === -1) {
+                throw new HttpException('choose a valid equipment status', HttpStatus.BAD_REQUEST);
             }
-            if (maintenance.maintenanceType === 'Parcialmente operativo' && maintenance.parts.length <= 0) {
+            if (maintenance.equipmentStatus === 'Parcialmente operativo' && maintenance.parts.length <= 0) {
                 throw new HttpException('parcial type need parts', HttpStatus.BAD_REQUEST);
             }
-            if (maintenance.maintenanceType !== 'Parcialmente operativo' && maintenance.parts.length > 0) {
+            if (maintenance.equipmentStatus !== 'Parcialmente operativo' && maintenance.parts.length > 0) {
                 throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
             }
             maintenance.date                 = updateMaintenanceDto.date;
@@ -53,6 +53,7 @@ export class MaintenanceService {
             maintenance.customerEquipmentsId = updateMaintenanceDto.customerEquipmentsId;
             maintenance.userId               = updateMaintenanceDto.userId;
             maintenance.parts                = updateMaintenanceDto.parts;
+            maintenance.equipmentStatus      = updateMaintenanceDto.equipmentStatus;
             maintenance.maintenanceType      = updateMaintenanceDto.maintenanceType;
             maintenance.priority             = updateMaintenanceDto.priority;
             maintenance.description          = updateMaintenanceDto.description;

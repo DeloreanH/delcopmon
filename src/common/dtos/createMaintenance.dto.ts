@@ -27,6 +27,9 @@ export class createMaintenanceDTO {
     readonly maintenanceType: string;
     @IsNotEmpty()
     @IsString()
+    readonly equipmentStatus: string;
+    @IsNotEmpty()
+    @IsString()
     readonly priority: string;
     @IsNotEmpty()
     @IsString()

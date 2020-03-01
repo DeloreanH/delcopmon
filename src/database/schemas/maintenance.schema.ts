@@ -28,6 +28,10 @@ export const MaintenanceSchema = new Schema({
     ],
     maintenanceType: {
         type: String,
+        enum: ['Correctivo', 'Preventivo'],
+    },
+    equipmentStatus: {
+        type: String,
         enum: ['Operativo', 'Parcialmente operativo', 'No operativo'],
     },
     priority: {
