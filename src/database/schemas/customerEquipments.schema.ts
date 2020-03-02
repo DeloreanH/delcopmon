@@ -20,8 +20,18 @@ export const CustomerEquipmentSchema = new Schema({
     adquisitionDate: {
         type: Date,
     },
-    condition: {
+    parts: [
+        {
+        partId: {
+            type: Schema.Types.ObjectId,
+            ref: modelName.CUSTOMER_EQUIPMENTS,
+        },
+        partDate: Date,
+       },
+    ],
+    equipmentStatus: {
         type: String,
+        enum: ['Operativo', 'Parcialmente operativo', 'No operativo'],
     },
     deleted: {
         type: Boolean,

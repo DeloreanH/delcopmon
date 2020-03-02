@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsString, IsMongoId, IsDate } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, IsMongoId, IsDate, IsArray } from 'class-validator';
+import { PartDTO } from './part.dto';
 
 export class createCustomerEquipmentDTO {
     @IsNotEmpty()
@@ -16,9 +17,6 @@ export class createCustomerEquipmentDTO {
     @IsString()
     readonly serial: string;
     @IsNotEmpty()
-    @IsString()
-    readonly condition: string;
-    @IsNotEmpty()
     @IsBoolean()
     readonly deleted: boolean;
     @IsNotEmpty()
@@ -27,4 +25,9 @@ export class createCustomerEquipmentDTO {
     @IsNotEmpty()
     @IsDate()
     adquisitionDate: Date;
+    @IsArray()
+    readonly parts: [PartDTO];
+    @IsNotEmpty()
+    @IsString()
+    readonly equipmentStatus: string;
 }

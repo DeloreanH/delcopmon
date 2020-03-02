@@ -23,6 +23,15 @@ export class CustomerEquipmentsService {
         return await this.customerEquipmentModel.find({ deleted: { $ne: false } });
     }
     public async create(createCustomerEquipmentDto: createCustomerEquipmentDTO): Promise<ICustomerEquipments> {
+        if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(createCustomerEquipmentDto.equipmentStatus) === -1) {
+            throw new HttpException('choose a valid equipment status', HttpStatus.BAD_REQUEST);
+        }
+        if (createCustomerEquipmentDto.equipmentStatus === 'Parcialmente operativo' && createCustomerEquipmentDto.parts.length <= 0) {
+            throw new HttpException('parcial type need parts', HttpStatus.BAD_REQUEST);
+        }
+        if (createCustomerEquipmentDto.equipmentStatus !== 'Parcialmente operativo' && createCustomerEquipmentDto.parts.length > 0) {
+            throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
+        }
         const toSave = Object.assign({}, createCustomerEquipmentDto, {lastUpdated: moment().toDate()});
         const customerEquipment = new this.customerEquipmentModel(toSave);
         return await customerEquipment.save();
@@ -32,11 +41,21 @@ export class CustomerEquipmentsService {
         if (!customerEquipment) {
             throw new HttpException('customerEquipment not found', HttpStatus.BAD_REQUEST);
         } else {
+            if (['Parcialmente operativo', 'Operativo', 'No operativo'].indexOf(updateCustomerEquipmentDto.equipmentStatus) === -1) {
+                throw new HttpException('choose a valid equipment status', HttpStatus.BAD_REQUEST);
+            }
+            if (updateCustomerEquipmentDto.equipmentStatus === 'Parcialmente operativo' && updateCustomerEquipmentDto.parts.length <= 0) {
+                throw new HttpException('parcial type need parts', HttpStatus.BAD_REQUEST);
+            }
+            if (updateCustomerEquipmentDto.equipmentStatus !== 'Parcialmente operativo' && updateCustomerEquipmentDto.parts.length > 0) {
+                throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
+            }
             customerEquipment.customerId  = updateCustomerEquipmentDto.customerId;
             customerEquipment.equipmentId = updateCustomerEquipmentDto.equipmentId;
             customerEquipment.serial      = updateCustomerEquipmentDto.serial;
             customerEquipment.lastUpdated = moment().toDate();
-            customerEquipment.condition   = updateCustomerEquipmentDto.condition;
+            customerEquipment.parts       = updateCustomerEquipmentDto.parts;
+            customerEquipment.equipmentStatus       = updateCustomerEquipmentDto.equipmentStatus;
             customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
             customerEquipment.adquisitionDate   = updateCustomerEquipmentDto.adquisitionDate;
             return await customerEquipment.save();

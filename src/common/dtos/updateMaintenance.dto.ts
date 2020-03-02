@@ -23,14 +23,9 @@ export class updateMaintenanceDTO {
     @IsString()
     @IsMongoId()
     readonly userId: string;
-    @IsArray()
-    readonly parts: [PartDTO];
     @IsNotEmpty()
     @IsString()
     readonly maintenanceType: string;
-    @IsNotEmpty()
-    @IsString()
-    readonly equipmentStatus: string;
     @IsOptional()
     @IsString()
     readonly priority: string;

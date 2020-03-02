@@ -53,7 +53,8 @@ export interface ICustomerEquipments extends Document {
     serial: string;
     lastUpdated: Date;
     adquisitionDate: Date;
-    condition: string;
+    parts: [IPart];
+    equipmentStatus: string;
     createdAt: Date;
     updatedAt: Date;
     deleted: boolean;
@@ -63,9 +64,7 @@ export interface IMaintenance extends Document {
     customerId: string;
     customerEquipmentsId: string;
     userId: string;
-    parts: [IPart];
     maintenanceType: string;
-    equipmentStatus: string;
     priority: string;
     description: string;
     createdAt: Date;

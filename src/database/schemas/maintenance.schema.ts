@@ -17,22 +17,9 @@ export const MaintenanceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.USER,
     },
-    parts: [
-        {
-        partId: {
-            type: Schema.Types.ObjectId,
-            ref: modelName.CUSTOMER_EQUIPMENTS,
-        },
-        partDate: Date,
-       },
-    ],
     maintenanceType: {
         type: String,
         enum: ['Correctivo', 'Preventivo'],
-    },
-    equipmentStatus: {
-        type: String,
-        enum: ['Operativo', 'Parcialmente operativo', 'No operativo'],
     },
     priority: {
         type: String,
