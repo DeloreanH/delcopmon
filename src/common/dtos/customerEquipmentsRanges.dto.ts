@@ -1,11 +1,11 @@
-import { IsDate, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsDateString } from 'class-validator';
 
 export class customerEquipmentsRangesDTO{
     @IsNotEmpty()
-    @IsDate()
+    @IsDateString()
     readonly startDate: Date;
     @IsNotEmpty()
-    @IsDate()
+    @IsDateString()
     readonly endDate: Date;
 
 }
