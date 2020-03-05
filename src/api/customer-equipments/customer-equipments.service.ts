@@ -32,8 +32,7 @@ export class CustomerEquipmentsService {
         if (createCustomerEquipmentDto.equipmentStatus !== 'Parcialmente operativo' && createCustomerEquipmentDto.parts.length > 0) {
             throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
         }
-        const toSave = Object.assign({}, createCustomerEquipmentDto, {lastUpdated: moment().toDate()});
-        const customerEquipment = new this.customerEquipmentModel(toSave);
+        const customerEquipment = new this.customerEquipmentModel(createCustomerEquipmentDto);
         return await customerEquipment.save();
     }
     public async update(updateCustomerEquipmentDto: updateCustomerEquipmentDTO): Promise<ICustomerEquipments> {
@@ -53,7 +52,7 @@ export class CustomerEquipmentsService {
             customerEquipment.customerId  = updateCustomerEquipmentDto.customerId;
             customerEquipment.equipmentId = updateCustomerEquipmentDto.equipmentId;
             customerEquipment.serial      = updateCustomerEquipmentDto.serial;
-            customerEquipment.lastUpdated = moment().toDate();
+            customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
             customerEquipment.parts       = updateCustomerEquipmentDto.parts;
             customerEquipment.equipmentStatus       = updateCustomerEquipmentDto.equipmentStatus;
             customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
