@@ -121,9 +121,11 @@ export class CustomerEquipmentsService {
                             customerId:  customerEquipment.customerId,
                             customerEquipmentsId: customerEquipment._id,
                             maintenanceType: 'Preventivo',
-                             userId: null,
-                             priority: null,
-                             description: null,
+                            userId: null,
+                            priority: null,
+                            description: null,
+                            equipmentStatus: null,
+                            parts: null
                         };
                         await this.maintenanceService.create(newMaintenace);
                         await this.markasPlanified(customerEquipment._id);
@@ -139,9 +141,11 @@ export class CustomerEquipmentsService {
                             customerId:  customerEquipment.customerId,
                             customerEquipmentsId: customerEquipment._id,
                             maintenanceType: 'Preventivo',
-                             userId: null,
-                             priority: null,
-                             description: null,
+                            userId: null,
+                            priority: null,
+                            description: null,
+                            equipmentStatus: null,
+                            parts: null
                         };
                         await this.maintenanceService.create(newMaintenace);
                         await this.markasPlanified(customerEquipment._id);
