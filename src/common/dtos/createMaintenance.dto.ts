@@ -4,7 +4,7 @@ export class createMaintenanceDTO {
 
     @IsNotEmpty()
     @IsDateString()
-    readonly date: Date;
+    readonly date: string;
     @IsNotEmpty()
     @IsMongoId()
     readonly customerId: string;

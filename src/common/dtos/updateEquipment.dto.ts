@@ -2,7 +2,6 @@ import { IsNotEmpty, IsString, IsMongoId } from 'class-validator';
 
 export class updateEquimentDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()

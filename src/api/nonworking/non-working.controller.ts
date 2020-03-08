@@ -8,7 +8,7 @@ import { deleteNonWorkingDTO } from '../../common/dtos/deleteNonWorking.dto';
 import { restoreNonWorkingDTO } from '../../common/dtos/restoreNonWorking.dto';
 
 @Controller('nonworking')
-@UseGuards(AuthGuard('jwt'))
+
 export class NonWorkingController {
     constructor(private nonWorkingService: NonWorkingService) {}
 

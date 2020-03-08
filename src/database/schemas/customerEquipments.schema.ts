@@ -20,6 +20,10 @@ export const CustomerEquipmentSchema = new Schema({
     adquisitionDate: {
         type: Date,
     },
+    planified: {
+        type: Boolean,
+        default: false,
+    },
     parts: [
         {
         partId: {

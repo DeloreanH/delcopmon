@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { MaintenanceService } from './maintenance.service';
+import { MaintenanceService } from '../../core/services/maintenance.service';
 import { createMaintenanceDTO } from '../../common/dtos/createMaintenance.dto';
 import { updateMaintenanceDTO } from '../../common/dtos/updateMaintenance.dto';
 import { deleteMaintenanceDTO } from '../../common/dtos/deleteMaintenance.dto';

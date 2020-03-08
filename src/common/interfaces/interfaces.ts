@@ -50,6 +50,7 @@ export interface ICustomer extends Document {
 export interface ICustomerEquipments extends Document {
     customerId: string;
     equipmentId: string;
+    planified: boolean;
     serial: string;
     lastUpdated: Date;
     adquisitionDate: Date;
@@ -67,14 +68,15 @@ export interface IMaintenance extends Document {
     maintenanceType: string;
     priority: string;
     description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    deleted: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deleted?: boolean;
 }
 
 export interface IPart {
     partId: string;
     partDate: Date;
+    days?: number;
 }
 
 export interface IConfigurations extends Document {
@@ -94,7 +96,7 @@ export interface IEquipment extends Document {
 }
 
 export interface INonWorking extends Document {
-    date: Date;
+    date: string;
     description: string;
     createdAt: Date;
     updatedAt: Date;

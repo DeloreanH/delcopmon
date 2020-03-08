@@ -1,9 +1,9 @@
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsDateString } from 'class-validator';
 
 export class createNonWorkingDTO {
     @IsNotEmpty()
-    @IsDate()
-    readonly date: Date;
+    @IsDateString()
+    readonly date: string;
     @IsNotEmpty()
     @IsString()
     readonly description: string;

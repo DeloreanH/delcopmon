@@ -1,13 +1,12 @@
-import { IsNotEmpty, IsString, IsMongoId, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsMongoId, IsDate, IsDateString } from 'class-validator';
 
 export class updateNonWorkingDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()
-    @IsDate()
-    readonly date: Date;
+    @IsDateString()
+    readonly date: string;
     @IsNotEmpty()
     @IsString()
     readonly description: string;

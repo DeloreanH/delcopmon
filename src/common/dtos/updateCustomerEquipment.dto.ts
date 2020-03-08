@@ -7,11 +7,9 @@ export class updateCustomerEquipmentDTO {
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly customerId: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly equipmentId: string;
     @IsNotEmpty()

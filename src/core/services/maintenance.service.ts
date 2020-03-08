@@ -69,4 +69,18 @@ export class MaintenanceService {
             },
         });
     }
+
+    async byDayCustomerCounter( date: string, customerId: string): Promise<number> {
+        const maintenances = await this.maintenanceModel.find({
+            date: new Date(date),
+            customerId,
+        });
+        return maintenances.length;
+    }
+    async byDayMaintenanceCounter(date: string): Promise<number> {
+        const maintenances = await this.maintenanceModel.find({
+            date: new Date(date),
+        });
+        return maintenances.length;
+    }
 }
