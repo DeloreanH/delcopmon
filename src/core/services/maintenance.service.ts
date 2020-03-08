@@ -36,6 +36,8 @@ export class MaintenanceService {
             maintenance.userId               = updateMaintenanceDto.userId;
             maintenance.maintenanceType      = updateMaintenanceDto.maintenanceType;
             maintenance.priority             = updateMaintenanceDto.priority;
+            maintenance.parts                = updateMaintenanceDto.parts;
+            maintenance.equipmentStatus      = updateMaintenanceDto.equipmentStatus;
             maintenance.description          = updateMaintenanceDto.description;
             return await maintenance.save();
         }

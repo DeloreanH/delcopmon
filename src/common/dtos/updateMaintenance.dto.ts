@@ -1,5 +1,6 @@
 
-import { IsNotEmpty, IsString, IsMongoId, IsOptional, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsString, IsMongoId, IsOptional, IsDateString, IsArray } from 'class-validator';
+import { PartDTO } from './part.dto';
 export class updateMaintenanceDTO {
     @IsNotEmpty()
     @IsMongoId()
@@ -25,4 +26,10 @@ export class updateMaintenanceDTO {
     @IsOptional()
     @IsString()
     readonly description: string;
+    @IsOptional()
+    @IsArray()
+    readonly parts: [PartDTO];
+    @IsOptional()
+    @IsString()
+    readonly equipmentStatus: string
 }

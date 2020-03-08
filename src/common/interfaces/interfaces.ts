@@ -71,6 +71,8 @@ export interface IMaintenance extends Document {
     createdAt?: Date;
     updatedAt?: Date;
     deleted?: boolean;
+    parts?: [IPart];
+    equipmentStatus?: string;
 }
 
 export interface IPart {
