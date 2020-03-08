@@ -90,15 +90,14 @@ export class AuthService {
             }
         }
     }
-    public async changePassword(changePasswordDto: changePasswordDTO, userId: string): Promise<IAuthResponse> {
+    public async changePassword(changePasswordDto: changePasswordDTO, userId: string): Promise<IUser> {
         const user = await this.userService.findById(userId);
         if (!user) {
             throw new HttpException('not user found', HttpStatus.BAD_REQUEST);
         } else {
             const hashed  = await hash(changePasswordDto.newPassword, 10);
             user.password = hashed;
-            await user.save();
-            return this.createJwtPayload(user);
+            return  await user.save();
         }
     }
     public async changeProfile(changeProfileDto: changeProfileDTO, userId: string): Promise<IUser> {
