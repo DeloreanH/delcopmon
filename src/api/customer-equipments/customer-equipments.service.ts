@@ -117,14 +117,14 @@ export class CustomerEquipmentsService {
                         const initialDate = moment(customerEquipment.lastUpdated).add(1, 'months').format('YYYY-MM-DD');
                         const date = await this.validMaintenaceDate(initialDate, customerEquipment.customerId);
                         const newMaintenace: createMaintenanceDTO = {
-                            date,
+                            date: moment(date).toDate().toString(),
                             customerId:  customerEquipment.customerId,
                             customerEquipmentsId: customerEquipment._id,
                             maintenanceType: 'Preventivo',
                             userId: null,
                             priority: null,
                             description: null,
-                            equipmentStatus: null,
+                            equipmentStatus: '',
                             parts: null
                         };
                         await this.maintenanceService.create(newMaintenace);
@@ -137,14 +137,14 @@ export class CustomerEquipmentsService {
                         const initialDate = moment(customerEquipment.lastUpdated).add(days, 'days').format('YYYY-MM-DD');
                         const date = await this.validMaintenaceDate(initialDate, customerEquipment.customerId);
                         const newMaintenace: createMaintenanceDTO = {
-                            date,
+                            date: moment(date).toDate().toString(),
                             customerId:  customerEquipment.customerId,
                             customerEquipmentsId: customerEquipment._id,
                             maintenanceType: 'Preventivo',
                             userId: null,
                             priority: null,
                             description: null,
-                            equipmentStatus: null,
+                            equipmentStatus: '',
                             parts: null
                         };
                         await this.maintenanceService.create(newMaintenace);
@@ -152,7 +152,9 @@ export class CustomerEquipmentsService {
                     }
                   }
             }
-            return 'ok';
+            return {
+                response: 'Ok'
+            };
         } catch (error) {
             throw new HttpException(error , HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -169,18 +171,18 @@ export class CustomerEquipmentsService {
             if (typeof nonWorking === 'undefined') {
                 if ( maintenanceDayCounter <= maxDay.value.value) {
                     if (customerMaintenanceDayCounter <= maxCustomer.value.value) {
-                        return date;
+                        return moment(date).format('YYYY-MM-DD');
                     } else {
-                        this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-M-DD'), customerId);
+                        return await this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-MM-DD'), customerId);
                     }
                 } else {
-                    this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-M-DD'), customerId);
+                    return await this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-MM-DD'), customerId);
                 }
             } else {
-                this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-M-DD'), customerId);
+                return await this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-MM-DD'), customerId);
             }
         } else {
-            this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-M-DD'), customerId);
+            return await this.validMaintenaceDate(moment(date).add(1, 'days').format('YYYY-MM-DD'), customerId);
         }
     }
 

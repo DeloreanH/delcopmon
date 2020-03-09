@@ -32,7 +32,7 @@ export const MaintenanceSchema = new Schema({
     ],
     equipmentStatus: {
         type: String,
-        enum: ['Operativo', 'Parcialmente operativo', 'No operativo'],
+        enum: ['Operativo', 'Parcialmente operativo', 'No operativo', ''],
     },
     priority: {
         type: String,
