@@ -110,6 +110,9 @@ export class CustomerEquipmentsService {
                 planified: {
                     $ne: true,
                 },
+                deleted: {
+                     $ne: true,
+                },
             });
             if (collection.length > 0) {
                 for (const customerEquipment of collection) {
