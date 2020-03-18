@@ -3,11 +3,11 @@ import { Schema } from 'mongoose';
 export const CustomerSchema = new Schema({
     customerName: {
         type: String,
-        unique: true,
     },
     rif: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     address: {
         type: String,

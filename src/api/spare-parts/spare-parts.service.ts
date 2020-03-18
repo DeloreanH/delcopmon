@@ -27,15 +27,24 @@ export class SparePartsService {
         const sparePartCounter = await this.count();
         if (sparePartCounter > 20) {
             throw new HttpException('spare parts reach limit of 20', HttpStatus.BAD_REQUEST);
+        } else {
+            const isMatch = await this.findByName(createSparePartDto.name);
+            if (isMatch) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
+            const sparePart = new this.sparePartModel(createSparePartDto);
+            return await sparePart.save();
         }
-        const sparePart = new this.sparePartModel(createSparePartDto);
-        return await sparePart.save();
     }
     public async update(updateSparePartDto: updateSparePartDTO): Promise<ISparePart> {
         const sparePart = await this.findById(updateSparePartDto._id);
         if (!sparePart) {
             throw new HttpException('spare part not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updateSparePartDto.name);
+            if ( isMatch && !sparePart._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
             sparePart.name = updateSparePartDto.name;
             return await sparePart.save();
         }
@@ -60,5 +69,9 @@ export class SparePartsService {
     }
     public async findById(id: string): Promise<ISparePart> {
         return await this.sparePartModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<ISparePart> {
+        const clean = name.toLowerCase();
+        return await this.sparePartModel.findOne({ name: clean });
     }
 }

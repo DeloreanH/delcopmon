@@ -22,6 +22,10 @@ export class CustomersService {
         return await this.customerModel.find({ deleted: { $ne: false } });
     }
     public async create(createCustomerDto: createCustomerDTO): Promise<ICustomer> {
+        const isMatchRif = await this.findByRif(createCustomerDto.rif);
+        if (isMatchRif) {
+            throw new HttpException('Rif already registered', HttpStatus.BAD_REQUEST);
+        }
         const customer = new this.customerModel(createCustomerDto);
         return await customer.save();
     }
@@ -30,6 +34,10 @@ export class CustomersService {
         if (!customer) {
             throw new HttpException('customer not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatchRif = await this.findByRif(updateCustomerDto.rif);
+            if ( isMatchRif && !customer._id.equals(isMatchRif._id)) {
+                throw new HttpException('Rif already registered', HttpStatus.BAD_REQUEST);
+            }
             customer.customerName     = updateCustomerDto.customerName;
             customer.rif              = updateCustomerDto.rif;
             customer.city             = updateCustomerDto.city;
@@ -68,5 +76,9 @@ export class CustomersService {
     }
     public async findById(id: string): Promise<ICustomer> {
         return await this.customerModel.findOne({_id: id});
+    }
+    public async findByRif(rif: string): Promise<ICustomer> {
+        const clean = rif.toLowerCase();
+        return await this.customerModel.findOne({ rif: clean });
     }
 }

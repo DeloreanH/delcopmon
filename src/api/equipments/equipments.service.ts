@@ -21,6 +21,14 @@ export class EquipmentsService {
         return await this.equipmentModel.find({ deleted: { $ne: false } });
     }
     public async create(createEquimentDto: createEquimentDTO): Promise<IEquipment> {
+        const isMatchModell  = await this.findByModel(createEquimentDto.modell);
+        const isMatchCode    = await this.findByCode(createEquimentDto.code);
+        if (isMatchModell) {
+            throw new HttpException('Modell already registered', HttpStatus.BAD_REQUEST);
+        }
+        if (isMatchCode) {
+            throw new HttpException('Code already registered', HttpStatus.BAD_REQUEST);
+        }
         const equipment = new this.equipmentModel(createEquimentDto);
         return await equipment.save();
     }
@@ -29,6 +37,14 @@ export class EquipmentsService {
         if (!equipment) {
             throw new HttpException('equipment not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatchModell  = await this.findByModel(updateEquimentDto.modell);
+            const isMatchCode    = await this.findByCode(updateEquimentDto.code);
+            if ( isMatchModell && !equipment._id.equals(isMatchModell._id)) {
+                throw new HttpException('Modell already registered', HttpStatus.BAD_REQUEST);
+            }
+            if ( isMatchCode  && !equipment._id.equals(isMatchCode._id)) {
+                throw new HttpException('Code already registered', HttpStatus.BAD_REQUEST);
+            }
             equipment.modell = updateEquimentDto.modell;
             equipment.code   = updateEquimentDto.code;
             equipment.brand  = updateEquimentDto.brand;
@@ -55,5 +71,13 @@ export class EquipmentsService {
     }
     public async findById(id: string): Promise<IEquipment> {
         return await this.equipmentModel.findOne({_id: id});
+    }
+    public async findByModel(modell: string): Promise<IEquipment> {
+        const clean = modell.toLowerCase();
+        return await this.equipmentModel.findOne({ modell: clean});
+    }
+    public async findByCode(code: string): Promise<IEquipment> {
+        const clean = code.toLowerCase();
+        return await this.equipmentModel.findOne({ code: clean});
     }
 }

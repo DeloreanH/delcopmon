@@ -39,6 +39,10 @@ export class CustomerEquipmentsService {
         if (createCustomerEquipmentDto.equipmentStatus !== 'Parcialmente operativo' && createCustomerEquipmentDto.parts.length > 0) {
             throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
         }
+        const isMatchSerial = await this.findBySerial(createCustomerEquipmentDto.serial);
+        if (isMatchSerial) {
+            throw new HttpException('Serial already registered', HttpStatus.BAD_REQUEST);
+        }
         const customerEquipment = new this.customerEquipmentModel(createCustomerEquipmentDto);
         return await customerEquipment.save();
     }
@@ -56,14 +60,18 @@ export class CustomerEquipmentsService {
             if (updateCustomerEquipmentDto.equipmentStatus !== 'Parcialmente operativo' && updateCustomerEquipmentDto.parts.length > 0) {
                 throw new HttpException('parts are only valid in parcial type', HttpStatus.BAD_REQUEST);
             }
-            customerEquipment.customerId  = updateCustomerEquipmentDto.customerId;
-            customerEquipment.equipmentId = updateCustomerEquipmentDto.equipmentId;
-            customerEquipment.serial      = updateCustomerEquipmentDto.serial;
-            customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
-            customerEquipment.parts       = updateCustomerEquipmentDto.parts;
-            customerEquipment.equipmentStatus       = updateCustomerEquipmentDto.equipmentStatus;
-            customerEquipment.lastUpdated = updateCustomerEquipmentDto.lastUpdated;
-            customerEquipment.adquisitionDate   = updateCustomerEquipmentDto.adquisitionDate;
+            const isMatchSerial = await this.findBySerial(updateCustomerEquipmentDto.serial);
+            if ( isMatchSerial && !customerEquipment._id.equals(isMatchSerial._id)) {
+                throw new HttpException('Serial already registered', HttpStatus.BAD_REQUEST);
+            }
+            customerEquipment.customerId      = updateCustomerEquipmentDto.customerId;
+            customerEquipment.equipmentId     = updateCustomerEquipmentDto.equipmentId;
+            customerEquipment.serial          = updateCustomerEquipmentDto.serial;
+            customerEquipment.lastUpdated     = updateCustomerEquipmentDto.lastUpdated;
+            customerEquipment.parts           = updateCustomerEquipmentDto.parts;
+            customerEquipment.equipmentStatus = updateCustomerEquipmentDto.equipmentStatus;
+            customerEquipment.lastUpdated     = updateCustomerEquipmentDto.lastUpdated;
+            customerEquipment.adquisitionDate = updateCustomerEquipmentDto.adquisitionDate;
             return await customerEquipment.save();
         }
     }
@@ -241,5 +249,9 @@ export class CustomerEquipmentsService {
 
     public async findById(id: string): Promise<ICustomerEquipments> {
         return await this.customerEquipmentModel.findOne({_id: id});
+    }
+    public async findBySerial(serial: string): Promise<ICustomerEquipments>  {
+        const clean = serial.toLowerCase();
+        return await this.customerEquipmentModel.findOne({ serial: clean });
     }
 }

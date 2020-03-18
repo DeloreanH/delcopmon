@@ -51,6 +51,7 @@ export class UserService {
         }
     }
     public async findOneByEmail(email: string): Promise<IUser> {
-        return await this.userModel.findOne({email});
+        const clean = email.toLowerCase();
+        return await this.userModel.findOne({email: clean});
     }
 }

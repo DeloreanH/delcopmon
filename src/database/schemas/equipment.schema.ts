@@ -4,10 +4,12 @@ export const EquipmentSchema = new Schema({
     modell: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     code: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     brand: {
         type: String,

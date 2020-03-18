@@ -13,6 +13,7 @@ export const CustomerEquipmentSchema = new Schema({
     serial: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     lastUpdated: {
         type: Date,
