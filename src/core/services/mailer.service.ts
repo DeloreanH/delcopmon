@@ -44,9 +44,9 @@ export class MailerService {
                 };
                 const htmlToSend = template(replacements);
                 const mailOptions = {
-                    from: 'test@api.com',
+                    from: 'delcopmon@mantenimiento.com',
                     to : email,
-                    subject : 'password reset',
+                    subject : 'Reinicio de contraseña',
                     html : htmlToSend,
                  };
                 await transporter.sendMail(mailOptions);
@@ -67,9 +67,9 @@ export class MailerService {
                 };
                 const htmlToSend = template(replacements);
                 const mailOptions = {
-                    from: 'test@api.com',
+                    from: 'delcopmon@mantenimiento.com',
                     to : email,
-                    subject : 'cuenta creada',
+                    subject : 'Cuenta creada',
                     html : htmlToSend,
                  };
                 await transporter.sendMail(mailOptions);
