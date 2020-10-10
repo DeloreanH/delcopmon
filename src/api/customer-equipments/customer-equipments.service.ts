@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { modelName } from '../../database/model-names';
 import { Model } from 'mongoose';
-import { ICustomerEquipments, IConfigurations, INonWorking, IPart } from '../../common/interfaces/interfaces';
+import { ICustomerEquipments, IConfigurations, INonWorking, IPart, IMaintenance } from '../../common/interfaces/interfaces';
 import { createCustomerEquipmentDTO } from '../../common/dtos/createCustomerEquipment.dto';
 import { updateCustomerEquipmentDTO } from '../../common/dtos/updateCustomerEquipment.dto';
 import { deleteCustomerEquipmentDTO } from '../../common/dtos/deleteCustomerEquipment.dto';
@@ -21,10 +21,43 @@ export class CustomerEquipmentsService {
         @InjectModel(modelName.CONFIGURATIONS) private configurationsModel: Model<IConfigurations>,
         @InjectModel(modelName.NONWORKING) private nonWorkingModel: Model<INonWorking>,
         private maintenanceService: MaintenanceService,
+        @InjectModel(modelName.MAINTENANCE) private maintenanceModel: Model<IMaintenance>,
     ) {}
 
     public async list(): Promise<ICustomerEquipments[]> {
-        return await this.customerEquipmentModel.find({ deleted: { $ne: true } });
+        // return await this.customerEquipmentModel.find({ deleted: { $ne: true } });
+        return await this.customerEquipmentModel
+        .aggregate()
+        .match({
+          deleted: { $ne: true },
+        })
+        .lookup({
+          from: this.maintenanceModel.collection.name,
+          localField: '_id',
+          foreignField: 'customerEquipmentsId',
+          as: 'maintenances',
+        })
+        .project({
+            _id: 1,
+            adquisitionDate: 1,
+            createdAt: 1,
+            customerId: 1,
+            deleted: 1,
+            equipmentId: 1,
+            equipmentStatus: 1,
+            lastUpdated: 1,
+            parts: 1,
+            planified: 1,
+            serial: 1,
+            updatedAt: 1,
+            maintenances: {
+                $filter: {
+                    input: '$maintenances',
+                    as: 'maintenance',
+                    cond: { $eq: ['$$maintenance.userId', null] },
+                },
+            },
+        });
     }
     public async listTrashed(): Promise<ICustomerEquipments[]> {
         return await this.customerEquipmentModel.find({ deleted: { $ne: false } });
